@@ -3,6 +3,7 @@ import BaseHead from "../../components/BaseHead.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
+import Project from "../../layouts/Project.astro";
 ---
 
 <!doctype html>
@@ -12,7 +13,40 @@ import { SITE_DESCRIPTION, SITE_TITLE } from "../../consts";
   </head>
   <body>
     <Header title={SITE_TITLE} />
-    <main></main>
+    <main>
+      <div class="min-h-screen flex flex-col px-16 py-8">
+        <div>
+          <h3>Apps</h3>
+          <a href="https://www.timbreapp.io/">
+            <Project
+              title="Timbre"
+              description="A sleep sounds app that can rank the best sounds for your sleep"
+              image=""
+            />
+          </a>
+        </div>
+        <div>
+          <h3>Websites</h3>
+          <a href="https://www.spawndnd.com">
+            <Project
+              title="Spawn"
+              description="AI D&D Character Sheet Creator"
+              image=""
+            />
+          </a>
+        </div>
+        <div>
+          <h3>Open Source</h3>
+          <a>
+            <Project
+              title="Voyager"
+              description="Routing system for SwiftUI built on top of native Tab and Navigation APIs"
+              image=""
+            />
+          </a>
+        </div>
+      </div>
+    </main>
     <Footer />
   </body>
 </html>
