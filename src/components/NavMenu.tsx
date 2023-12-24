@@ -15,11 +15,11 @@ export function NavMenu() {
                             Blog
                         </NavigationMenuLink>
                     </a>
-                    <a href="/tags">
+                    {/* <a href="/tags">
                         <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                             Tags
                         </NavigationMenuLink>
-                    </a>
+                    </a> */}
                 </NavigationMenuItem>
             </NavigationMenuList>
         </NavigationMenu>

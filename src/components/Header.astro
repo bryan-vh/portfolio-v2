@@ -3,6 +3,7 @@ import { SITE_TITLE } from "../consts";
 import { NavMenu } from "@/components/NavMenu";
 import { Button } from "./ui/button";
 import { Github, Sun, Twitter } from "lucide-react";
+import { ModeToggle } from "./ModeToggle";
 ---
 
 <header>
@@ -12,12 +13,16 @@ import { Github, Sun, Twitter } from "lucide-react";
       <NavMenu client:idle />
     </div>
     <div class="flex items-center gap-2">
-      <Button variant="outline" size="icon"><Sun /></Button>
+      <ModeToggle client:load />
       <Button variant="outline" size="icon">
-        <a href="https://www.github.com/bryan-vh"><Github /></a>
+        <a href="https://www.github.com/bryan-vh"
+          ><Github className="w-4 h-4" /></a
+        >
       </Button>
       <Button variant="outline" size="icon">
-        <a href="https://www.twitter.com/bryan_van_horn"><Twitter /></a>
+        <a href="https://www.twitter.com/bryan_van_horn"
+          ><Twitter className="w-4 h-4" /></a
+        >
       </Button>
       <Button>
         <a href="https://www.buymeacoffee.com/bryanvh">Buy me a 🍵</a>

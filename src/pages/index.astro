@@ -13,7 +13,30 @@ const posts = (await getCollection("blog"))
   .slice(0, 3);
 ---
 
-<!doctype html>
+<script is:inline>
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
+
+  if (typeof localStorage !== "undefined") {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+</script>
+
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
@@ -33,13 +56,13 @@ const posts = (await getCollection("blog"))
               working on, technologies I enjoy, tips and tricks, and more.
             </p>
           </div>
-          <div class="flex flex-col items-start gap-4">
+          <!-- <div class="flex flex-col items-start gap-4">
             <h4 class="font-bold text-2xl">Get updates on new posts</h4>
             <div class="flex gap-2">
               <Input type="email" placeholder="Email address" />
               <Button>Subscribe</Button>
             </div>
-          </div>
+          </div> -->
         </div>
         <div class="flex flex-col items-start gap-4">
           <h3 class="text-xl font-bold text-muted-foreground">Recent Posts</h3>
