@@ -3,6 +3,14 @@ import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { getCollection } from "astro:content";
+import FormattedDate from "@/components/FormattedDate.astro";
+
+const posts = (await getCollection("blog"))
+  .sort((b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
+  .slice(0, 3);
 ---
 
 <!doctype html>
@@ -13,17 +21,50 @@ import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
   <body>
     <Header title={SITE_TITLE} />
     <main>
-      <div class="flex flex-col min-h-screen px-16 py-8">
-        <h1 class="font-bold">Hi, I'm Bryan!</h1>
-        <p>Software Engineer 🛠️ - Matcha Guy 🍵 - Ghibli Fan 🇯🇵</p>
-        <p>
-          This is both my portfolio and a blog where I'll share what I'm working
-          on, technologies I enjoy, tips and tricks, and more.
-        </p>
-        <h4 class="font-bold">Get updates on new posts</h4>
-        <div>
-          <input type="email" placeholder="Email address" class="border" />
-          <button>Subscribe</button>
+      <div class="flex flex-col items-start min-h-screen px-48 py-8 gap-32">
+        <div class="flex flex-col items-start gap-8">
+          <div class="flex flex-col items-start gap-4">
+            <h1 class="font-extrabold text-5xl">Hi, I'm Bryan!</h1>
+            <p class="text-muted-foreground">
+              Software Engineer 🛠️ - Matcha Guy 🍵 - Ghibli Fan 🇯🇵
+            </p>
+            <p>
+              This is both my portfolio and a blog where I'll share what I'm
+              working on, technologies I enjoy, tips and tricks, and more.
+            </p>
+          </div>
+          <div class="flex flex-col items-start gap-4">
+            <h4 class="font-bold text-2xl">Get updates on new posts</h4>
+            <div class="flex gap-2">
+              <Input type="email" placeholder="Email address" />
+              <Button>Subscribe</Button>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col items-start gap-4">
+          <h3 class="text-xl font-bold text-muted-foreground">Recent Posts</h3>
+          <div class="grid grid-cols-3 gap-8">
+            {
+              posts.map((post) => (
+                <a href={`/blog/${post.slug}/`}>
+                  <div class="flex flex-col gap-2">
+                    <img
+                      class="rounded-xl"
+                      width={720}
+                      height={360}
+                      src={post.data.heroImage}
+                      alt=""
+                    />
+                    <h4 class="text-2xl font-bold">{post.data.title}</h4>
+                    <p class="text-sm text-muted-foreground">
+                      <FormattedDate date={post.data.pubDate} />
+                    </p>
+                  </div>
+                </a>
+              ))
+            }
+          </div>
+          <a href="/blog"><Button>See All</Button></a>
         </div>
       </div>
     </main>

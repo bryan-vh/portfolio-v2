@@ -1,22 +1,27 @@
 ---
-import HeaderLink from "./HeaderLink.astro";
 import { SITE_TITLE } from "../consts";
+import { NavMenu } from "@/components/NavMenu";
+import { Button } from "./ui/button";
+import { Github, Sun, Twitter } from "lucide-react";
 ---
 
 <header>
-  <nav class="flex items-center justify-between px-16 py-4">
+  <nav class="flex items-center justify-between px-48 py-4">
     <div class="flex items-center gap-8">
-      <h3 class="font-bold mb-0"><a href="/">{SITE_TITLE}</a></h3>
-      <HeaderLink href="/projects">Projects</HeaderLink>
-      <HeaderLink href="/blog">Blog</HeaderLink>
-      <HeaderLink href="/tags">Tags</HeaderLink>
+      <h3 class="font-extrabold text-4xl"><a href="/">{SITE_TITLE}</a></h3>
+      <NavMenu client:idle />
     </div>
-    <div>
-      <HeaderLink href="https://www.buymeacoffee.com/bryanvh">
-        Buy me a 🍵
-      </HeaderLink>
-      <a href="https://twitter.com/astrodotbuild" target="_blank"> </a>
-      <a href="https://github.com/withastro/astro" target="_blank"> </a>
+    <div class="flex items-center gap-2">
+      <Button variant="outline" size="icon"><Sun /></Button>
+      <Button variant="outline" size="icon">
+        <a href="https://www.github.com/bryan-vh"><Github /></a>
+      </Button>
+      <Button variant="outline" size="icon">
+        <a href="https://www.twitter.com/bryan_van_horn"><Twitter /></a>
+      </Button>
+      <Button>
+        <a href="https://www.buymeacoffee.com/bryanvh">Buy me a 🍵</a>
+      </Button>
     </div>
   </nav>
 </header>
