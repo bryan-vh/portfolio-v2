@@ -4,38 +4,13 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { getCollection } from "astro:content";
-import FormattedDate from "@/components/FormattedDate.astro";
+import PostLink from "@/components/PostLink.astro";
 
 const posts = (await getCollection("blog"))
   .sort((b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
   .slice(0, 3);
 ---
-
-<script is:inline>
-  const getThemePreference = () => {
-    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
-      return localStorage.getItem("theme");
-    }
-    return window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-  };
-  const isDark = getThemePreference() === "dark";
-  document.documentElement.classList[isDark ? "add" : "remove"]("dark");
-
-  if (typeof localStorage !== "undefined") {
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains("dark");
-      localStorage.setItem("theme", isDark ? "dark" : "light");
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-  }
-</script>
 
 <html lang="en">
   <head>
@@ -67,25 +42,7 @@ const posts = (await getCollection("blog"))
         <div class="flex flex-col items-start gap-4">
           <h3 class="text-xl font-bold text-muted-foreground">Recent Posts</h3>
           <div class="grid grid-cols-3 gap-8">
-            {
-              posts.map((post) => (
-                <a href={`/blog/${post.slug}/`}>
-                  <div class="flex flex-col gap-2">
-                    <img
-                      class="rounded-xl"
-                      width={720}
-                      height={360}
-                      src={post.data.heroImage}
-                      alt=""
-                    />
-                    <h4 class="text-2xl font-bold">{post.data.title}</h4>
-                    <p class="text-sm text-muted-foreground">
-                      <FormattedDate date={post.data.pubDate} />
-                    </p>
-                  </div>
-                </a>
-              ))
-            }
+            {posts.map((post) => <PostLink post={post} />)}
           </div>
           <a href="/blog"><Button>See All</Button></a>
         </div>

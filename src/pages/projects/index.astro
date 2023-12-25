@@ -27,14 +27,14 @@ repos.sort(
         <h1 class="text-4xl font-extrabold">Projects</h1>
         <div class="space-y-4">
           <h2 class="text-xl font-bold text-muted-foreground">Launched</h2>
-          <div class="grid grid-cols-3 gap-4">
+          <div class="grid grid-cols-3 items-stretch gap-4">
             <LinkPreview url="https://www.spawndnd.com/" />
             <LinkPreview url="https://www.timbreapp.io/" />
           </div>
         </div>
         <div class="space-y-4">
           <h2 class="text-xl font-bold text-muted-foreground">Open Source</h2>
-          <div class="grid grid-cols-3 items-start gap-4">
+          <div class="grid grid-cols-3 items-stretch gap-4">
             {repos.map((repo) => <GitHub repo={repo} />)}
           </div>
         </div>

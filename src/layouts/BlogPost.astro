@@ -1,4 +1,5 @@
 ---
+import "@/styles/global.css";
 import type { CollectionEntry } from "astro:content";
 import BaseHead from "../components/BaseHead.astro";
 import Header from "../components/Header.astro";
@@ -17,37 +18,36 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   <body>
     <Header />
     <main>
-      <article class="flex flex-col px-48 py-16 gap-8">
-        <div class="flex justify-between gap-8">
-          <div class="flex flex-col gap-2">
-            <h1 class="text-4xl font-bold">{title}</h1>
-            <div class="date">
-              <FormattedDate date={pubDate} />
-              {
-                updatedDate && (
-                  <div class="last-updated-on">
-                    Last updated on <FormattedDate date={updatedDate} />
-                  </div>
-                )
-              }
-            </div>
-          </div>
-          <div class="hero-image">
+      <article class="flex flex-col items-start px-48 py-16 gap-8">
+        <div class="hero-image">
+          {
+            heroImage && (
+              <img
+                width={720}
+                height={360}
+                src={heroImage}
+                alt=""
+                class="rounded-2xl"
+              />
+            )
+          }
+        </div>
+        <div class="flex flex-col gap-2">
+          <h1 class="text-5xl font-extrabold">{title}</h1>
+          <div class="date">
+            <FormattedDate date={pubDate} />
             {
-              heroImage && (
-                <img
-                  width={720}
-                  height={360}
-                  src={heroImage}
-                  alt=""
-                  class="rounded-2xl"
-                />
+              updatedDate && (
+                <div class="last-updated-on">
+                  Last updated on <FormattedDate date={updatedDate} />
+                </div>
               )
             }
           </div>
         </div>
+        <!-- </div> -->
         <hr />
-        <div>
+        <div class="prose">
           <slot />
         </div>
       </article>
