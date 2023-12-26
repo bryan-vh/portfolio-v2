@@ -1,8 +1,9 @@
 ---
 import { SITE_TITLE } from "../consts";
-import { NavMenu } from "@/components/NavMenu";
+import { DesktopNav } from "./DesktopNav";
+import { MobileNav } from "./MobileNav";
 import { Button } from "./ui/button";
-import { Github, Sun, Twitter } from "lucide-react";
+import { Github, Twitter } from "lucide-react";
 import { ModeToggle } from "./ModeToggle";
 ---
 
@@ -31,14 +32,15 @@ import { ModeToggle } from "./ModeToggle";
 </script>
 
 <header>
-  <nav class="flex items-center justify-between px-48 py-4">
+  <nav class="flex items-center justify-between p-4 lg:px-48">
     <div class="flex items-center gap-8">
       <h3 class="font-extrabold text-4xl hover:text-primary">
         <a href="/">{SITE_TITLE}</a>
       </h3>
-      <NavMenu client:idle />
+      <DesktopNav client:idle />
     </div>
-    <div class="flex items-center gap-2">
+    <MobileNav client:idle />
+    <div class="hidden lg:flex items-center gap-2">
       <ModeToggle client:load />
       <Button variant="outline" size="icon">
         <a href="https://www.github.com/bryan-vh"

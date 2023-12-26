@@ -7,22 +7,22 @@ import { getCollection } from "astro:content";
 import PostLink from "@/components/PostLink.astro";
 
 const posts = (await getCollection("blog")).sort(
-  (b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+  (b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf(),
 );
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-  </head>
+  <head><BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} /></head>
   <body>
     <Header />
     <main>
       <section>
-        <div class="flex flex-col min-h-screen w-screen px-48 py-8 gap-8">
+        <div
+          class="flex flex-col min-h-screen w-screen p-4 lg:px-48 lg:py-8 gap-8"
+        >
           <h1 class="text-4xl font-extrabold">Blog</h1>
-          <div class="grid grid-cols-3 gap-8">
+          <div class="grid lg:grid-cols-3 gap-8">
             {posts.map((post) => <PostLink post={post} />)}
           </div>
         </div>
