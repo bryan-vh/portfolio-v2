@@ -21,7 +21,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
   <body>
     <Header />
     <main>
-      <article class="flex flex-col items-start px-48 py-16 gap-8">
+      <article class="flex flex-col items-center px-48 py-16 gap-8">
         <div class="hero-image">
           {
             heroImage && (
@@ -35,7 +35,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
             )
           }
         </div>
-        <div class="flex flex-col gap-2">
+        <div class="flex flex-col items-center gap-2">
           <h1 class="text-5xl font-extrabold">{title}</h1>
           <p class="text-muted-foreground">{description}</p>
           <div class="date">
@@ -52,7 +52,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
         <hr />
         <div>
           <!-- <TableOfContents headings={headings} /> -->
-          <div class="prose">
+          <div class="prose dark:prose-invert">
             <slot />
           </div>
         </div>
