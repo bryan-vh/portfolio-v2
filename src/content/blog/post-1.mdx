@@ -1,0 +1,117 @@
+---
+title: How to use SwiftUI's Navigation Stack
+description: An overview of how to use SwiftUI's Navigation Stack
+pubDate: Dec 25 2023
+tags:
+  - SwiftUI
+  - Swift
+---
+
+## NavigationStack
+
+Starting with **iOS 16**, Apple introduced its new navigation API for SwiftUI
+which revolves around the new View called the **NavigationStack**.
+
+The key difference between NavigationStack and NavigationView is that it allows
+you to pass an array of items that conform to the `Hashable` protocol, which
+can represent the different routes in your app.
+
+To initialize a NavigationStack in your app with a set of routes, do the following:
+
+```swift
+enum Route: Hashable {
+    case route1
+    case route2
+    // ...
+}
+
+struct NavView: View {
+
+    @State private var paths = [Route]()
+
+    var body: some View {
+        NavigationStack(paths: $paths) {
+            // Put your starting view here
+            RootView()
+                .navigationDestination(for: Route.self) { route in
+                    switch (route) {
+                    case .route1: Route1View()
+                    case .route2: Route2View()    
+                    }
+                }
+        }
+    }
+}
+```
+
+Using NavigationStack, we can determine exactly which **View** will show
+for each route.
+
+## Associated Value Routes
+
+Using Swift Enum's associated value property, you can then pass certain 
+parameters to each route, like so:
+
+```swift
+enum ValuedRoute: Hashable {
+    case route1(String)
+    case route2(Int, Int)
+    // ...
+}
+```
+
+You can then pass these values down to a specific view depending on its initializer.
+So you can have a **Route1View** that is initialized with that parameter as needed.
+
+## Standalone Router
+
+To push and pop routes off the stack programmatically, it can be useful to use a standalone
+router that can be passed down via the environment. This **Router** will be responsible
+for storing the state of the routes for a **NavigationStack**.
+
+```swift
+class Router<Route: Hashable>: ObservableObject {
+    @Published var paths: [Route] = []
+
+    func push(_ route: Route) {
+        paths.append(route)
+    }
+
+    func pop() {
+        paths.removeLast()
+    }
+}
+```
+
+To use this with your NavigationStack you could then set up the following:
+
+```swift
+struct NavView: View {
+
+    @StateObject private var router = Router<Route>()
+
+    var body: some View {
+        NavigationStack(paths: $router.paths) {
+            // Put your starting view here
+            RootView()
+                .navigationDestination(for: Route.self) { route in
+                    switch (route) {
+                    case .route1: Route1View()
+                    case .route2: Route2View()    
+                    }
+                }
+        }
+        .environmentObject(router)
+    }
+}
+```
+
+You can then access the router in any of the Views on the stack using
+the `@EnvironmentObject` property wrapper.
+
+## Voyager
+
+If you want a completely reusable solution for this that also works
+seamlessly with tab-based navigation, consider checking out [Voyager](https://www.github.com/bryan-vh/Voyager.git),
+a lightweight type-safe Swift Package I built to handle all of these
+issues out of the box.
