@@ -1,0 +1,27 @@
+---
+title: How to show a title and icon in a SwiftUI Toolbar
+description: A short guide on how to show a Label's text and icon when placed in a SwiftUI toolbar
+pubDate: Dec 29 2023
+---
+
+## Toolbar
+
+In SwiftUI, we are able to place items in a toolbar using the `.toolbar` modifier
+and then creating a `ToolbarItem` in the closure of that modifier.
+
+However, some components display differently when placed in a toolbar rather than a
+standard View. In this case, we are taking a look at the **Label** view, which only
+shows its icon / image when placed in a toolbar.
+
+To show the title and icon, we need to modify the **Label** view with the following:
+
+```swift
+// Sample label with title and SFSymbol icon
+Label("Title", systemImage: "plus")
+    .labelStyle(.titleAndIcon)
+```
+
+By applying the `.labelStyle` modifier with `.titleAndIcon`, the **Label** will now show
+both its title and icon.
+
+To use other styles, check out the [Apple Developer documentation](https://developer.apple.com/documentation/swiftui/labelstyle).
