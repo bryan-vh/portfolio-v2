@@ -4,7 +4,7 @@ description: An overview of how to use SwiftUI's Navigation Stack
 pubDate: Dec 25 2023
 ---
 
-## NavigationStack
+## What is a NavigationStack?
 
 Starting with **iOS 16**, Apple introduced its new navigation API for SwiftUI
 which revolves around the new View called the **NavigationStack**.
@@ -33,7 +33,7 @@ struct NavView: View {
                 .navigationDestination(for: Route.self) { route in
                     switch (route) {
                     case .route1: Route1View()
-                    case .route2: Route2View()    
+                    case .route2: Route2View()
                     }
                 }
         }
@@ -44,9 +44,9 @@ struct NavView: View {
 Using NavigationStack, we can determine exactly which **View** will show
 for each route.
 
-## Associated Value Routes
+## Using Associated Value Routes
 
-Using Swift Enum's associated value property, you can then pass certain 
+Using Swift Enum's associated value property, you can then pass certain
 parameters to each route, like so:
 
 ```swift
@@ -60,7 +60,7 @@ enum ValuedRoute: Hashable {
 You can then pass these values down to a specific view depending on its initializer.
 So you can have a **Route1View** that is initialized with that parameter as needed.
 
-## Standalone Router
+## Enable programmatic use with a standalone router and EnvironmentObject
 
 To push and pop routes off the stack programmatically, it can be useful to use a standalone
 router that can be passed down via the environment. This **Router** will be responsible
@@ -94,7 +94,7 @@ struct NavView: View {
                 .navigationDestination(for: Route.self) { route in
                     switch (route) {
                     case .route1: Route1View()
-                    case .route2: Route2View()    
+                    case .route2: Route2View()
                     }
                 }
         }
@@ -106,7 +106,7 @@ struct NavView: View {
 You can then access the router in any of the Views on the stack using
 the `@EnvironmentObject` property wrapper.
 
-## Voyager
+## Try out Voyager!
 
 If you want a completely reusable solution for this that also works
 seamlessly with tab-based navigation, consider checking out [Voyager](https://www.github.com/bryan-vh/Voyager.git),

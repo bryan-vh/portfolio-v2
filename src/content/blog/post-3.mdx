@@ -1,0 +1,70 @@
+---
+title: A simple guide to Swift actors
+description: An overview of the actor type declaration from Swift 5.5 and how it works with Swift concurrency
+pubDate: Jan 7 2024
+---
+
+## What is an Actor?
+
+Starting with Swift 5.5, an actor is a new way to declare a type, just like you would with
+`class`, `enum` or `struct`. Unlike these other classes, however, the `actor` type declaration
+provides thread-safe access to mutable properties and functions with Swift's concurrency
+system via `async / await`.
+
+## Actors vs Classes
+
+Actors are very similar to classes (they are passed by reference) but come with one key difference
+that allow them to ideally operate in a concurrent environment.
+
+- Actors (**automatically!**) allow only one caller to access their mutable properties and methods at any
+  given time.
+
+For example, let's say we want some data store that will hold all of our posts for our blogging app. Rather
+than create a `class`, we can create an `actor` that will allow for multithreaded access to our posts data.
+
+```swift
+actor PostsDataStore {
+    var posts = Set<Post>()
+
+    func add(_ post: Post) {
+        posts.insert(post)
+    }
+
+    func remove(_ post: Post) {
+        posts.remove(post)
+    }
+}
+```
+
+By using the `actor` type declaration, all of **PostsDataStore**'s methods & properties are now implicitly thread-safe. Now
+let's look at how we can interact with these methods & properties using async / await.
+
+## Using Actor methods and properties with async / await
+
+In order to call **PostsDataStore**'s `fetchAll` method, the **PostsViewModel** has to use the `await` keyword in an asynchronous
+context. Under the hood, this ensures that the operations of adding and fetching are serialized correctly between threads.
+
+```swift
+class PostsViewModel {
+    private let store = PostsDataStore()
+
+    func add() async {
+        let post = Post(title: "New post", date: .now)
+        await store.add(post)
+    }
+
+    func fetchAll() async -> [Post] {
+        let posts = await store.posts
+        return Array(posts)
+    }
+}
+```
+
+In this case, let's assume that the user attempts to add a post on one thread while fetching posts on another thread. By using
+an actor, we prevent nasty data races and keep our posts data clean. It also saves time debugging in Xcode, which usually isn't fun.
+
+## That's the Tea
+
+Hopefully you can see how actors are extremely valuable for adapting your code to Swift's new concurrency paradigm. Not only
+do they provide a simple type declaration to make thread-safe properties and methods, actors also allow for easy interfacing
+via `async / await`. Be sure to try them out in your next project!

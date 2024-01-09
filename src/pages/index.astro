@@ -9,7 +9,7 @@ import PostLink from "@/components/PostLink.astro";
 
 const posts = (await getCollection("blog"))
   .sort((b, a) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf())
-  .slice(0, 3);
+  .slice(0, 6);
 ---
 
 <html lang="en">
@@ -24,7 +24,7 @@ const posts = (await getCollection("blog"))
           <div class="flex flex-col items-start gap-4">
             <h1 class="font-extrabold text-5xl">Hi, I'm Bryan!</h1>
             <p class="text-muted-foreground">
-              Software Engineer 🛠️ - Matcha Guy 🍵 - Ghibli Fan 🇯🇵
+              Software Engineer 🛠️ - Matcha Drinker 🍵 - Ghibli Fan 🇯🇵
             </p>
             <p>
               This is both my portfolio and a blog where I'll share what I'm
